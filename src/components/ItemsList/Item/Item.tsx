@@ -1,6 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import style from "./Item.module.css";
-const Item = ({ todo, toggleIsCompleted, deleteTodo }) => {
+interface Props {
+  todo: ITodo;
+  toggleIsCompleted: (id: number, value: boolean) => void;
+  deleteTodo: (id: number) => void;
+}
+interface ITodo {
+  id: number;
+  title: string;
+  isCompleted: boolean;
+}
+const Item: FC<Props> = ({
+  todo,
+  toggleIsCompleted,
+  deleteTodo,
+}): JSX.Element => {
   return (
     <div className={style.item}>
       <label>
