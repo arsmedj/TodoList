@@ -8,13 +8,23 @@ const TodoList = () => {
     { id: 3, title: "Walk the dog", isCompleted: false },
     { id: 4, title: "Go Shopping!", isCompleted: true },
   ];
-  let [todos, setTodos] = useState(initial);
-  let [filter, setFilter] = useState("all");
-  let leftCount = todos.filter((todo) => !todo.isCompleted);
-  const onFilterChange = (name) => {
+  let [todos, setTodos] = useState<Array<ITodo>>(initial);
+  let [filter, setFilter] = useState<string>("all");
+  let leftCount: Array<ITodo> = todos.filter(
+    (todo: ITodo) => !todo.isCompleted
+  );
+
+  const onFilterChange = (name: string) => {
     setFilter(name);
   };
-  const changeFilter = (filter, todos) => {
+
+  interface ITodo {
+    id: number;
+    title: string;
+    isCompleted: boolean;
+  }
+
+  const changeFilter = (filter: string, todos: Array<ITodo>) => {
     switch (filter) {
       case "all": {
         return todos;
@@ -25,12 +35,15 @@ const TodoList = () => {
       case "active": {
         return todos.filter((todo) => !todo.isCompleted);
       }
+      default: {
+        return todos;
+      }
     }
   };
 
   let items = changeFilter(filter, todos);
 
-  const onAddTask = (title) => {
+  const onAddTask = (title: string) => {
     let newTodo = {
       id: Date.now(),
       title,
@@ -41,7 +54,7 @@ const TodoList = () => {
   };
 
   const clearCompleted = () => {
-    let newArr = todos.filter((todo) => {
+    let newArr = todos.filter((todo: ITodo) => {
       if (!todo.isCompleted) {
         return true;
       }
@@ -49,7 +62,7 @@ const TodoList = () => {
     setTodos(newArr);
   };
 
-  const deleteTodo = (id) => {
+  const deleteTodo = (id: number) => {
     let newArr = todos.filter((todo) => {
       if (todo.id === id) {
         return false;
@@ -60,8 +73,8 @@ const TodoList = () => {
     setTodos(newArr);
   };
 
-  const toggleIsCompleted = (id, value) => {
-    let newArr = todos.map((todo) => {
+  const toggleIsCompleted = (id: number, value: boolean) => {
+    let newArr = todos.map((todo: ITodo) => {
       if (todo.id === id) {
         todo.isCompleted = value;
         return todo;

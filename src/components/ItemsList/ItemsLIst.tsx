@@ -1,34 +1,44 @@
-import React from "react";
+import React, { FC } from "react";
 import Item from "./Item/Item";
 import style from "./ItemList.module.css";
-const ItemsList = (props) => {
+interface ITodo {
+  id: number;
+  title: string;
+  isCompleted: boolean;
+}
+interface Props {
+  leftCount: Array<ITodo>;
+  list: Array<ITodo>;
+  deleteTodo: (id: number) => void;
+  onFilterChange: (name: string) => void;
+  clearCompleted: () => void;
+  toggleIsCompleted: (id: number, value: boolean) => void;
+}
+const ItemsList: FC<Props> = (props): JSX.Element => {
   let filterBtns = [
-    { value: "all", label: "All" },
-    { value: "active", label: "Active" },
-    { value: "completed", label: "Completed" },
+    { id: 1, value: "all", label: "All" },
+    { id: 2, value: "active", label: "Active" },
+    { id: 3, value: "completed", label: "Completed" },
   ];
-
   return (
     <div>
-      {props.list.map((todo) => {
+      {props.list.map((todo: ITodo) => {
         return (
           <Item
             deleteTodo={props.deleteTodo}
             toggleIsCompleted={props.toggleIsCompleted}
-            toggleIsImpotant={props.toggleIsImpotant}
             key={todo.id}
             todo={todo}
           />
         );
       })}
       <div className={style.paper}>
-        <p className={style.itemsLeft}>
-          {props.itemsLeft} {props.leftCount.length} items left
-        </p>
+        <p className={style.itemsLeft}>{props.leftCount.length} items left</p>
         <div className={style.btlList}>
           {filterBtns.map((btn) => {
             return (
               <button
+                key={btn.id}
                 onClick={() => {
                   props.onFilterChange(btn.value);
                 }}
