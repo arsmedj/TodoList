@@ -33,7 +33,7 @@ const ItemsList: FC<Props> = (props): JSX.Element => {
         );
       })}
       <div className={style.paper}>
-        <p className={style.itemsLeft}>{props.leftCount.length} items left</p>
+        <p className={style.itemsLeft}>{props.leftCount.length + ' '}{props.leftCount.length == 1 ? 'item ' : 'items '}left</p>
         <div className={style.btlList}>
           {filterBtns.map((btn) => {
             return (
